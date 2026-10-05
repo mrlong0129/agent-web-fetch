@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Why Agents Should Read the Web Like Humans | Example Blog</title>
+<meta name="description" content="A short essay on escalation strategies for web reading agents.">
+<meta property="og:title" content="Why Agents Should Read the Web Like Humans">
+<meta property="og:site_name" content="Example Blog">
+<meta property="og:description" content="A short essay on escalation strategies for web reading agents.">
+<meta name="author" content="Ada Example">
+<meta property="article:published_time" content="2026-09-30T08:00:00Z">
+<link rel="canonical" href="https://blog.example.com/posts/agents-read-the-web">
+<link rel="amphtml" href="https://blog.example.com/posts/agents-read-the-web/amp">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+</head>
+<body>
+<header><nav><a href="/">Home</a> <a href="/about">About</a> <a href="/archive">Archive</a></nav></header>
+<main>
+<article>
+<h1>Why Agents Should Read the Web Like Humans</h1>
+<p class="byline">By Ada Example · September 30, 2026</p>
+<p>Most web-reading tools for language models make exactly one request and give up when it fails. That is a poor match for the real web, where the same URL can return a full article, a verification page, or an empty JavaScript shell depending on who is asking.</p>
+<h2>Start cheap</h2>
+<p>A plain HTTP request with coherent, realistic headers succeeds on the majority of public pages. It is fast, it is polite, and it costs almost nothing. Only when it fails should an agent reach for something heavier, such as a different client profile or a <a href="https://playwright.dev/">headless browser</a>.</p>
+<h2>Know why you failed</h2>
+<p>When a page cannot be read, the reason matters. A rate limit means wait and retry later. A login wall means ask the user. A Cloudflare challenge might clear in a real browser. A paywall means stop: the content is not public.</p>
+<ul>
+<li>Retryable: rate limits, transient server errors, some bot checks.</li>
+<li>Not retryable: logins, paywalls, deleted content.</li>
+</ul>
+<blockquote>Escalate only when blocked, and always say why.</blockquote>
+<p><img src="/img/ladder.png" alt="The escalation ladder"></p>
+<p>Extraction is its own problem. Readability-style algorithms, structured data such as JSON-LD, social meta tags and embedded framework state each succeed on different sites, so the best approach is to run them all and keep the richest result.</p>
+</article>
+</main>
+<footer><p>© 2026 Example Blog. All rights reserved.</p><a href="/privacy">Privacy</a></footer>
+</body>
+</html>

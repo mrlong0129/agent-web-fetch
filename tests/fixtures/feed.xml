@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel><title>Example Blog</title><link>https://blog.example.com/</link>
+<item><title>Thin Page Post</title><link>https://blog.example.com/posts/thin</link>
+<content:encoded><![CDATA[<p>This is the full text of the post, delivered through the RSS feed because the HTML page only rendered a teaser. Feeds are an underrated, polite and cheap way to read a site: they exist precisely so that machines can consume content.</p><p>A second paragraph makes sure the content is long enough to count as a real article for the extraction threshold used in tests.</p>]]></content:encoded>
+</item></channel></rss>

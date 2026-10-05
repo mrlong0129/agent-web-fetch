@@ -1,0 +1,33 @@
+# agent-web-fetch
+
+> agent-web-fetch is an open-source (MIT) web-reading toolkit for AI agents. It fetches public web pages with an escalation strategy — cheapest first, escalate only when blocked — and returns clean Markdown plus metadata, or a precise machine-readable reason (blocked_reason) when a page cannot be read. It ships as a Python library, a CLI (`awf`), an MCP server (`awf-mcp`, tools `fetch_page` and `extract_from_html`) for Claude Code / Cursor, and an agent skill file (SKILL.md) usable without installing anything.
+
+Author: Yomin Ma (https://yomin.love, https://x.com/HEee1850894). Repository: https://github.com/mrlong0129/agent-web-fetch
+
+## What it does
+
+- Escalation ladder: (0) public site APIs (GitHub README API/raw, X syndication + oEmbed) → (1) plain HTTP with a coherent browser header set → (2) client rotation (desktop Chrome, mobile Safari, Android Chrome, WeChat in-app browser), same-origin Referer, Accept-Language, Retry-After-aware backoff → (3) block detection after every rung → (4) multi-strategy extraction → AMP / RSS alternates → (5) optional Playwright headless browser.
+- Block detection reasons: cloudflare_challenge, captcha, verification_wall, login_required, paywall, rate_limited, forbidden, not_found, soft_404, content_removed, js_required, robots_disallowed, network_error, empty_content, unsupported_content_type.
+- Extraction strategies compete and the richest wins (recorded in extraction_method): trafilatura, readability-lxml, JSON-LD articleBody, embedded JS state (__NEXT_DATA__, __NUXT__, window.__INITIAL_STATE__, __APOLLO_STATE__, ytInitialPlayerResponse), og:/twitter: meta, and site adapters.
+- Site adapters: wechat (mp.weixin.qq.com: WeChat iOS UA first, 环境异常 verification detection, #js_content for long articles, content_noencode / og:title for short text posts), github, x.
+- Output fields: url, final_url, status, ok, title, author, published, site_name, description, content_markdown, content_text, links, images, extraction_method, extraction_candidates, fetch_attempts (strategy, result, status, blocked_reason, detail), blocked_reason, blocked_detail, robots, warnings.
+
+## Responsible use
+
+Public content only. It reports logins, paywalls and CAPTCHAs and never bypasses them. It checks robots.txt on every fetch (strict mode for crawls), paces requests per host, and does not impersonate search-engine crawlers.
+
+## Docs
+
+- [README (Chinese + English)](https://github.com/mrlong0129/agent-web-fetch/blob/main/README.md): why, the escalation strategy, install, CLI/MCP/skill usage, comparison, limitations
+- [SKILL.md](https://github.com/mrlong0129/agent-web-fetch/blob/main/skill/SKILL.md): the escalation playbook in plain language for agents
+- [Project page](https://yomin.love/projects/agent-web-fetch/)
+
+## Quick start
+
+- Install: `pip install "git+https://github.com/mrlong0129/agent-web-fetch"` (browser extra: `agent-web-fetch[browser]` + `playwright install chromium`)
+- CLI: `awf fetch <url> --format md|json|text [--browser|--no-browser] [--adapter auto|none|wechat|github|x]`
+- MCP (Claude Code): `claude mcp add agent-web-fetch -- uvx --from git+https://github.com/mrlong0129/agent-web-fetch awf-mcp`
+
+## Related
+
+- [wechat-article-fetcher](https://github.com/mrlong0129/wechat-article-fetcher): a focused tool for WeChat Official Account articles by the same author
